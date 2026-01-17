@@ -1,8 +1,13 @@
 package com.aditya.enterprisehub.user.entity;
 
 import com.aditya.enterprisehub.common.entity.AuditableEntity;
+import com.aditya.enterprisehub.user.enums.AuthProvider;
+import com.aditya.enterprisehub.user.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -17,5 +22,31 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class User extends AuditableEntity {
+        @Column(nullable = false)
+        private String name;
 
+        @Column(nullable = false, unique = true)
+        private String email;
+
+        /**
+         * Nullable because OAuth users won't have a password
+         */
+        @Column
+        private String password;
+
+        @Enumerated(EnumType.STRING)
+        @Column(nullable = false)
+        private UserStatus status;
+
+        @Enumerated(EnumType.STRING)
+        @Column(nullable = false)
+        private AuthProvider provider;
+
+        @ManyToMany(fetch = FetchType.LAZY)
+        @JoinTable(
+                name = "user_roles",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id")
+        )
+        private Set<Role> roles = new HashSet<>();
 }
