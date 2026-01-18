@@ -1,8 +1,8 @@
-package com.aditya.enterprisehub.user.entity;
+package com.aditya.enterprisehub.entity;
 
-import com.aditya.enterprisehub.common.entity.AuditableEntity;
-import com.aditya.enterprisehub.user.enums.AuthProvider;
-import com.aditya.enterprisehub.user.enums.UserStatus;
+import com.aditya.enterprisehub.entity.enums.AuditableEntity;
+import com.aditya.enterprisehub.entity.enums.AuthProvider;
+import com.aditya.enterprisehub.entity.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

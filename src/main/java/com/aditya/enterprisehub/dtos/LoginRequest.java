@@ -1,4 +1,4 @@
-package com.aditya.enterprisehub.auth.dto;
+package com.aditya.enterprisehub.dtos;
 
 public record LoginRequest(String email, String password) {
 }

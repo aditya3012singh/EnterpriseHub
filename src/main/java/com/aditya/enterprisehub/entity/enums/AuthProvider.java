@@ -1,4 +1,4 @@
-package com.aditya.enterprisehub.user.enums;
+package com.aditya.enterprisehub.entity.enums;
 
 public enum AuthProvider {
     LOCAL,

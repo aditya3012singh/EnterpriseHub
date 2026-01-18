@@ -1,4 +1,4 @@
-package com.aditya.enterprisehub.common.entity;
+package com.aditya.enterprisehub.entity.enums;
 
 import jakarta.persistence.*;
 import lombok.Getter;

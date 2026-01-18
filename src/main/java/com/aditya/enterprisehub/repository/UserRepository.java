@@ -1,6 +1,6 @@
-package com.aditya.enterprisehub.user.repository;
+package com.aditya.enterprisehub.repository;
 
-import com.aditya.enterprisehub.user.entity.User;
+import com.aditya.enterprisehub.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

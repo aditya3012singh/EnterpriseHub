@@ -1,7 +1,7 @@
-package com.aditya.enterprisehub.user.repository;
+package com.aditya.enterprisehub.repository;
 
-import com.aditya.enterprisehub.user.entity.Role;
-import com.aditya.enterprisehub.user.enums.RoleType;
+import com.aditya.enterprisehub.entity.Role;
+import com.aditya.enterprisehub.entity.enums.RoleType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

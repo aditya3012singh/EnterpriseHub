@@ -1,7 +1,7 @@
-package com.aditya.enterprisehub.user.entity;
+package com.aditya.enterprisehub.entity;
 
-import com.aditya.enterprisehub.common.entity.BaseEntity;
-import com.aditya.enterprisehub.user.enums.RoleType;
+import com.aditya.enterprisehub.entity.enums.BaseEntity;
+import com.aditya.enterprisehub.entity.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
 

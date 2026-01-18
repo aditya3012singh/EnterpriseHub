@@ -1,4 +1,4 @@
-package com.aditya.enterprisehub.common.entity;
+package com.aditya.enterprisehub.entity.enums;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -8,7 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 
 @MappedSuperclass
-public abstract class AuditableEntity extends BaseEntity{
+public abstract class AuditableEntity extends BaseEntity {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
