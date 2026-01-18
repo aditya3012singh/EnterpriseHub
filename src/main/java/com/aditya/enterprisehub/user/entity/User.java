@@ -42,11 +42,12 @@ public class User extends AuditableEntity {
         @Column(nullable = false)
         private AuthProvider provider;
 
-        @ManyToMany(fetch = FetchType.LAZY)
+        @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(
                 name = "user_roles",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id")
         )
+        @Builder.Default
         private Set<Role> roles = new HashSet<>();
 }
