@@ -5,6 +5,9 @@ import com.aditya.enterprisehub.dtos.LoginRequest;
 import com.aditya.enterprisehub.dtos.RegisterRequest;
 import com.aditya.enterprisehub.entity.Role;
 import com.aditya.enterprisehub.entity.User;
+import com.aditya.enterprisehub.entity.enums.RoleType;
+import com.aditya.enterprisehub.entity.enums.UserStatus;
+import com.aditya.enterprisehub.repository.RoleRepository;
 import com.aditya.enterprisehub.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -25,6 +30,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final RoleRepository roleRepository;
 
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
@@ -48,12 +54,15 @@ public class AuthController {
         if (userRepository.existsByEmail(request.email())) {
             throw new RuntimeException("User already exists");
         }
+        Role role = roleRepository.findByType(request.role())
+                .orElseThrow(() -> new RuntimeException("Role not found: " + request.role()));
 
         // 2️⃣ Create user entity
         User user = new User();
         user.setEmail(request.email());
+        user.setName(request.name());
         user.setPassword(passwordEncoder.encode(request.password()));
-        user.setRoles();
+        user.setRoles(Set.of(role));
         user.setEnabled(true);
 
         // 3️⃣ Save to DB
@@ -70,6 +79,7 @@ public class AuthController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/hello")
     public String helloUser() {
+        System.out.println("hello");
         return "you hit this";
     }
 }

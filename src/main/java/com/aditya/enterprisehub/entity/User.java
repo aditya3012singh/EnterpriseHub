@@ -37,13 +37,13 @@ public class User extends AuditableEntity {
 
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
-        private UserStatus status;
+        private UserStatus status= UserStatus.ACTIVE;
 
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
-        private AuthProvider provider;
+        private AuthProvider provider= AuthProvider.LOCAL;
 
-        @ManyToMany(fetch = FetchType.LAZY)
+        @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(
                 name = "user_roles",
                 joinColumns = @JoinColumn(name = "user_id"),

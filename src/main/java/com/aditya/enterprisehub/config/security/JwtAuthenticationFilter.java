@@ -43,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = header.substring(7);
         String username = jwtService.extractUsername(token);
 
+
         // SecurityContext empty? authenticate
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
@@ -55,18 +56,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
+            System.out.println(token);
 
             List<String> roles = jwtService.extractRoles(token);
+            System.out.println(roles.get(0));
 
             List<SimpleGrantedAuthority> authorities = roles.stream()
                     .map(SimpleGrantedAuthority::new)
                     .toList();
-
+            System.out.println(authorities);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(
-//                                userDetails,
-//                                null,
-//                                userDetails.getAuthorities()
                             username,      // principal
                             null,          // credentials (not needed)
                             authorities    // 👈 JWT roles
