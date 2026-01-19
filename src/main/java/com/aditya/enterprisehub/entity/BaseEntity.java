@@ -1,17 +1,15 @@
-package com.aditya.enterprisehub.entity.enums;
+package com.aditya.enterprisehub.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.UUID;
 
 @MappedSuperclass
 @Getter
 @Setter
 public abstract class BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
-    private UUID id;
+    private long id;
 }

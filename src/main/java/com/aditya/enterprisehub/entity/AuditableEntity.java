@@ -1,4 +1,4 @@
-package com.aditya.enterprisehub.entity.enums;
+package com.aditya.enterprisehub.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

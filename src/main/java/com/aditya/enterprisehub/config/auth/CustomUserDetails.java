@@ -1,6 +1,7 @@
 package com.aditya.enterprisehub.config.auth;
 
 import com.aditya.enterprisehub.entity.User;
+import com.aditya.enterprisehub.entity.enums.UserStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of(new SimpleGrantedAuthority("ROLE_"+ user.getRoles()));
+        return List.of(new SimpleGrantedAuthority("ROLE_"+ user.getRoles().toString()));
     }
 
     @Override
@@ -32,8 +33,8 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override public boolean isAccountNonExpired() { return true; }
-    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isAccountNonLocked() { return user.getStatus() == UserStatus.ACTIVE; }
     @Override public boolean isCredentialsNonExpired() { return true; }
-    @Override public boolean isEnabled() { return true; }
+    @Override public boolean isEnabled() { return user.isEnabled(); }
 }
 

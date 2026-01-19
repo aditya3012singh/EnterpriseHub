@@ -1,6 +1,5 @@
 package com.aditya.enterprisehub.entity;
 
-import com.aditya.enterprisehub.entity.enums.AuditableEntity;
 import com.aditya.enterprisehub.entity.enums.AuthProvider;
 import com.aditya.enterprisehub.entity.enums.UserStatus;
 import jakarta.persistence.*;
@@ -34,6 +33,8 @@ public class User extends AuditableEntity {
         @Column
         private String password;
 
+        private boolean enabled = true;
+
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
         private UserStatus status;
@@ -42,7 +43,7 @@ public class User extends AuditableEntity {
         @Column(nullable = false)
         private AuthProvider provider;
 
-        @ManyToMany(fetch = FetchType.EAGER)
+        @ManyToMany(fetch = FetchType.LAZY)
         @JoinTable(
                 name = "user_roles",
                 joinColumns = @JoinColumn(name = "user_id"),
