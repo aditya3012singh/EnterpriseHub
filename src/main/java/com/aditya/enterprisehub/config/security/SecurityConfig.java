@@ -35,6 +35,8 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/payments/**").authenticated()
+                        .requestMatchers("/webhooks/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // 🔥 DO NOT inject via constructor

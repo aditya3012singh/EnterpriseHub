@@ -9,9 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+//
+//Handles provider onboarding
+//Creates ProviderProfile
+//Works with User + ProviderProfile
 @Service
 @RequiredArgsConstructor
-public class ProviderService {
+public class ProviderOnboardingService {
     private final UserRepository userRepository;
     private final ProviderProfileRepository providerRepository;
 

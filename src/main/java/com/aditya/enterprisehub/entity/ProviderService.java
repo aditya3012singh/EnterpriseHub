@@ -1,7 +1,10 @@
 package com.aditya.enterprisehub.entity;
 
+import com.aditya.enterprisehub.entity.common.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(
@@ -15,7 +18,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProviderService extends AuditableEntity{
+public class ProviderService extends AuditableEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "provider_id")
@@ -25,5 +28,26 @@ public class ProviderService extends AuditableEntity{
     @JoinColumn(name = "service_id")
     private Service service;
 
+    /**
+     * Price charged by provider for this service
+     */
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    /**
+     * Estimated duration in minutes
+     */
+    @Column(nullable = false)
+    private Integer durationInMinutes;
+
+    /**
+     * Experience of provider for this service (in years)
+     */
+    @Column(nullable = false)
+    private Integer experienceInYears;
+
+    /**
+     * Whether provider is currently offering this service
+     */
     private boolean active= true;
 }

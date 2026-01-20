@@ -1,5 +1,6 @@
 package com.aditya.enterprisehub.entity;
 
+import com.aditya.enterprisehub.entity.common.AuditableEntity;
 import jakarta.persistence.*;
 
 @Entity

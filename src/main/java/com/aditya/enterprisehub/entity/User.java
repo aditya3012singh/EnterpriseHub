@@ -1,5 +1,6 @@
 package com.aditya.enterprisehub.entity;
 
+import com.aditya.enterprisehub.entity.common.AuditableEntity;
 import com.aditya.enterprisehub.entity.enums.AuthProvider;
 import com.aditya.enterprisehub.entity.enums.UserStatus;
 import jakarta.persistence.*;

@@ -5,7 +5,7 @@ import com.aditya.enterprisehub.entity.User;
 import com.aditya.enterprisehub.entity.enums.VerificationStatus;
 import com.aditya.enterprisehub.repository.ProviderProfileRepository;
 import com.aditya.enterprisehub.repository.UserRepository;
-import com.aditya.enterprisehub.services.ProviderService;
+import com.aditya.enterprisehub.services.ProviderOnboardingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/provider")
 public class ProviderController {
-    private final ProviderService providerService;
+    private final ProviderOnboardingService providerOnboardingService;
     private final UserRepository userRepository;
     private final ProviderProfileRepository providerRepository;
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/request")
     public ProviderProfile requestProvider(Authentication authentication) {
-        ProviderProfile profile= providerService.createProvider(authentication);
+        ProviderProfile profile= providerOnboardingService.createProvider(authentication);
 
         return profile;
     }

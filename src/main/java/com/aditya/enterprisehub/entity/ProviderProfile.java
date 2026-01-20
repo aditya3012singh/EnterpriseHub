@@ -1,5 +1,6 @@
 package com.aditya.enterprisehub.entity;
 
+import com.aditya.enterprisehub.entity.common.AuditableEntity;
 import com.aditya.enterprisehub.entity.enums.VerificationStatus;
 import jakarta.persistence.*;
 import lombok.*;
