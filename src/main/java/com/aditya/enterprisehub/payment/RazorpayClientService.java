@@ -24,7 +24,7 @@ public class RazorpayClientService {
         request.put("currency", "INR");
         request.put("receipt", "booking_" + bookingId);
 
-        Order order = client.orders.create(request);
+        Order order =
         return order.get("id");
     }
 
