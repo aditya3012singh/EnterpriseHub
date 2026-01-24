@@ -9,6 +9,7 @@ import com.aditya.enterprisehub.repository.BookingRepository;
 import com.aditya.enterprisehub.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,7 +48,11 @@ public class PaymentService {
         // 5️⃣ Create payment record
         Payment payment = Payment.builder()
                 .booking(booking)
-                .amount(booking.getProviderService().getPrice())
+                .amount(
+                        booking.getProviderService()
+                                .getPrice()
+                                .doubleValue()
+                )
                 .status(PaymentStatus.INITIATED)
                 .build();
 
@@ -100,4 +105,58 @@ public class PaymentService {
         Booking booking = payment.getBooking();
         booking.setStatus(BookingStatus.PAID);
     }
+
+    @Transactional
+    public void handleWebhook(String payload, String signature) {
+
+        if (!razorpayClientService.verifyWebhook(payload, signature)) {
+            throw new RuntimeException("Invalid webhook");
+        }
+
+        JSONObject json = new JSONObject(payload);
+        String event = json.getString("event");
+
+        if ("payment.captured".equals(event)) {
+
+            JSONObject entity =
+                    json.getJSONObject("payload")
+                            .getJSONObject("payment")
+                            .getJSONObject("entity");
+
+            String orderId = entity.getString("order_id");
+            String paymentId = entity.getString("id");
+
+            Payment payment =
+                    paymentRepository.findByGatewayOrderId(orderId)
+                            .orElseThrow();
+
+            // 🛑 Idempotency check
+            if (payment.getStatus() == PaymentStatus.SUCCESS) {
+                return;
+            }
+
+            payment.setGatewayPaymentId(paymentId);
+            payment.setStatus(PaymentStatus.SUCCESS);
+
+            payment.getBooking().setStatus(BookingStatus.PAID);
+        }
+    }
+
+//    @Transactional
+//    public void refund(Long bookingId) {
+//
+//        Payment payment =
+//                paymentRepository.findByBookingId(bookingId)
+//                        .orElseThrow();
+//
+//        if (payment.getStatus() != PaymentStatus.SUCCESS) {
+//            throw new RuntimeException("Refund not allowed");
+//        }
+//
+//        razorpayClientService.refund(payment.getGatewayPaymentId());
+//
+//        payment.setStatus(PaymentStatus.REFUNDED);
+//        payment.getBooking().setStatus(BookingStatus.CANCELLED);
+//    }
+
 }

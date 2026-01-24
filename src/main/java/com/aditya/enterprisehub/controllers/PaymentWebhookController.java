@@ -2,10 +2,8 @@ package com.aditya.enterprisehub.controllers;
 
 import com.aditya.enterprisehub.services.PaymentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,5 +23,14 @@ public class PaymentWebhookController {
                 razorpay_payment_id,
                 razorpay_signature
         );
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> handleWebhook(
+            @RequestBody String payload,
+            @RequestHeader("X-Razorpay-Signature") String signature
+    ) {
+        paymentService.handleWebhook(payload, signature);
+        return ResponseEntity.ok().build();
     }
 }

@@ -75,4 +75,18 @@ public class RazorpayClientService {
             return false;
         }
     }
+
+    public boolean verifyWebhook(String payload, String signature) {
+        try {
+            Utils.verifyWebhookSignature(
+                    payload,
+                    signature,
+                    "RAZORPAY_WEBHOOK_SECRET"
+            );
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
