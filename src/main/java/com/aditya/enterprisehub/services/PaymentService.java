@@ -142,21 +142,21 @@ public class PaymentService {
         }
     }
 
-    @Transactional
-    public void refund(Long bookingId) {
-
-        Payment payment =
-                paymentRepository.findByBookingId(bookingId)
-                        .orElseThrow();
-
-        if (payment.getStatus() != PaymentStatus.SUCCESS) {
-            throw new RuntimeException("Refund not allowed");
-        }
-
-        razorpayClientService.refund(payment.getGatewayPaymentId());
-
-        payment.setStatus(PaymentStatus.REFUNDED);
-        payment.getBooking().setStatus(BookingStatus.CANCELLED);
-    }
+//    @Transactional
+//    public void refund(Long bookingId) {
+//
+//        Payment payment =
+//                paymentRepository.findByBookingId(bookingId)
+//                        .orElseThrow();
+//
+//        if (payment.getStatus() != PaymentStatus.SUCCESS) {
+//            throw new RuntimeException("Refund not allowed");
+//        }
+//
+//        razorpayClientService.refund(payment.getGatewayPaymentId());
+//
+//        payment.setStatus(PaymentStatus.REFUNDED);
+//        payment.getBooking().setStatus(BookingStatus.CANCELLED);
+//    }
 
 }
