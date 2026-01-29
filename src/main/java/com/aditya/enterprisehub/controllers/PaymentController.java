@@ -14,7 +14,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    @PostMapping("/{bookingId}/initiate")
+    @PostMapping("/{bookingId}/initiate-payment")
     public Payment initiatePayment(
             @PathVariable Long bookingId,
             @AuthenticationPrincipal CustomUserDetails principal
